@@ -24,7 +24,7 @@ def storeDataSet():
                 self.page_content = page_content
                 self.metadata = metadata
 
-        with open('data.json', 'r') as file:
+        with open('embeddingData/data.json', 'r') as file:
             data = json.load(file)
             print(data)
 
@@ -45,5 +45,6 @@ def storeDataSet():
         docsearch=Pinecone.from_texts([t.page_content for t in documents], embeddings,index_name=index_name )
 
         return jsonify({"data": "Successfully stored data"}), 201
-    except:
-        return jsonify({"data": "Error storing data"}), 400
+    except Exception as e:
+       return jsonify({"data": f"Error storing data: {e}"}), 400
+

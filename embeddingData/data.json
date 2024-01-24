@@ -1,0 +1,10 @@
+[
+    {
+        "question": "Can you briefly describe what an EventEmitter is and share how it's employed in Node.js?",
+        "answer": "In Node.js, an EventEmitter is a core module that provides an event-driven architecture, allowing objects to emit and handle events. It is a crucial component for building scalable and modular applications. The EventEmitter class in Node.js facilitates the implementation of the observer pattern, where certain objects (listeners) subscribe to specific events and respond accordingly when those events are emitted. Developers can extend the EventEmitter class to create custom objects that emit events, and other objects can register listeners to respond to those events. This mechanism promotes loose coupling and flexibility in the design of asynchronous and event-driven applications. In essence, EventEmitter is instrumental in managing communication and coordination between different parts of a Node.js application by facilitating the exchange of information through events and event handlers."
+    },
+    {
+        "question": "Explain the purpose of the process.argv array in Node.js.",
+        "answer": "In Node.js, the process.argv array serves the purpose of capturing command-line arguments passed to a Node.js script during its execution. The array contains the command-line arguments as strings, with the first element (process.argv[0]) representing the path to the Node.js executable, the second element (process.argv[1]) representing the path to the script being executed, and subsequent elements containing any additional arguments provided by the user. This array allows developers to access and parse command-line inputs within their Node.js applications, enabling dynamic and customizable behavior based on user-defined parameters. Developers commonly use third-party libraries like yargs or commander to facilitate the parsing and handling of command-line arguments in a more structured and convenient manner."
+    }
+]

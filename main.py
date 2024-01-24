@@ -129,3 +129,6 @@ def conversation():
 
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
+
+if __name__ == "__main__":
+    app.run(debug=True)
