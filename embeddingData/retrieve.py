@@ -43,7 +43,7 @@ def getDataSet(query):
     )["data"][0]["embedding"]
 
     search_response = index.query(
-        top_k=3,
+        top_k=1,
         vector=query_vector,
         include_metadata=True)
 

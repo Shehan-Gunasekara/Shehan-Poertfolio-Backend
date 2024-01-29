@@ -37,7 +37,7 @@ import pinecone
 from langchain.vectorstores import Pinecone
 from embeddingData.retrieve import getDataSet
 from embeddingData.store import storeDataSet
-
+from pymongo import MongoClient
 os.environ["OPENAI_API_KEY"] = config(
     "OPENAI_API_KEY"
 )  # Fix the environment variable name
@@ -56,12 +56,20 @@ def storeEmbedding():
 @app.route("/conversation", methods=["POST"])
 def conversation():
     data = request.get_json()
+    client = MongoClient('mongodb+srv://shehan:shehan2025@cluster0.d5gvyao.mongodb.net/')
+    db = client['portfolio']
+    collection = db['chat _history']
+
     if "sessionID" in data:
         sessionID = data.get("sessionID")
      
         question = data.get("question")
 
-   
+        conversation = {"sessionID": sessionID, "message": question , "user": "client"}
+
+        reponse = collection.insert_one(conversation)
+        print("reponse", reponse)
+
         print("question", question)
 
         embendingResault = getDataSet(question)
@@ -69,7 +77,7 @@ def conversation():
         embendingToken = embendingResault['token']
 
         connection_url = os.environ.get(
-            "MONGODB_URL", "mongodb+srv://hello:Axcer6371@talktune.fwm6vrq.mongodb.net"
+            "MONGODB_URL", "mongodb+srv://shehan:shehan2025@cluster0.d5gvyao.mongodb.net/"
         )
         message_history = MongoDBChatMessageHistory(
             connection_string=connection_url, session_id=sessionID
@@ -116,6 +124,8 @@ def conversation():
             output_tokens = len(encoding.encode(conv))
             tokens = tokens + output_tokens
             answer = response_obj.answer
+            conversation = {"sessionID": sessionID, "message": answer , "user": "agent"}
+            collection.insert_one(conversation)
             return jsonify({"data": {"answer": answer, "tokens": tokens}}), 201
         except (json.JSONDecodeError, TypeError):
             new_parser = OutputFixingParser.from_llm(parser=parser, llm=llm)
@@ -124,8 +134,9 @@ def conversation():
             output_tokens = len(encoding.encode(conv))
             tokens = tokens + output_tokens
             answer = response_obj.answer
+            conversation = {"sessionID": sessionID, "message": answer , "user": "agent"}
+            collection.insert_one(conversation)
             return jsonify({"data": {"answer": answer, "tokens": tokens}}), 201
- 
 
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
