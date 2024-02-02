@@ -142,7 +142,7 @@ def conversation():
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
-@app.route("/aibot", methods=["GET"])
+@app.route("/aibot", methods=["POST"])
 def aibot():
     data = request.get_json()
     print("AAAAAAAAAAAAAAAAA")
