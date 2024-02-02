@@ -1,0 +1,7 @@
+Flask==3.0.0
+pymongo
+python-decouple==3.8
+torch==2.1.2
+nltk==3.8.1
+requests
+

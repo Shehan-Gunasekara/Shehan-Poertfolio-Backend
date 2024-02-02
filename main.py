@@ -1,4 +1,5 @@
 import json
+from chatbot.chat import chatWithBot
 from flask import Flask, request, jsonify
 import os
 from decouple import config
@@ -140,6 +141,18 @@ def conversation():
 
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
+
+@app.route("/aibot", methods=["POST"])
+def aibot():
+    data = request.get_json()
+    if "sessionID" in data:
+        sessionID = data.get("sessionID")
+        answer=chatWithBot(data.get("question"))
+        return jsonify({"data": {"answer": answer}}), 201
+
+    else:    
+        return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
+
 
 if __name__ == "__main__":
     app.run(debug=True)
