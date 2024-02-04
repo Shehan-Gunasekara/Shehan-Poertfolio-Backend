@@ -6,9 +6,11 @@ duckduckgo-search==3.8.5
 pymongo==4.6.1
 gunicorn==21.2.0
 python-decouple==3.8
-torch==1.11.0+cpu
+https://download.pytorch.org/whl/cpu/torch-1.13.0%2Bcpu-cp38-cp38-linux_x86_64.whl
+numpy>=1.19.5
+nbsphinx
+git+https://github.com/pyg-team/pyg_sphinx_theme.git
 nltk
-numpy
 pinecone-client==2.2.4
 requests
 
