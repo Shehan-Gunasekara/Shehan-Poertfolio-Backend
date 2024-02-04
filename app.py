@@ -36,7 +36,6 @@ import io
 import pinecone
 from langchain.vectorstores import Pinecone
 from embeddingData.retrieve import getDataSet
-from timeout_decorator import timeout
 # from embeddingData.store import storeDataSet
 from pymongo import MongoClient
 os.environ["OPENAI_API_KEY"] = config(
@@ -54,8 +53,7 @@ class virtualAssistants(BaseModel):
 # def storeEmbedding():
 #      return  storeDataSet()
 
-@app.route("/conversation", methods=["POST"])
-@timeout(50) 
+@app.route("/conversation", methods=["POST"]) 
 def conversation():
     data = request.get_json()
     client = MongoClient('mongodb+srv://shehan:shehan123@cluster0.d5gvyao.mongodb.net/')
