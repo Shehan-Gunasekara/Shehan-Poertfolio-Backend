@@ -6,7 +6,9 @@ duckduckgo-search==3.8.5
 pymongo==4.6.1
 gunicorn==21.2.0
 python-decouple==3.8
-torch
+torch==1.8.1
+nltk
+numpy
 pinecone-client==2.2.4
 requests
 
