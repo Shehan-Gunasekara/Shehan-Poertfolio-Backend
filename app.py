@@ -55,6 +55,7 @@ class virtualAssistants(BaseModel):
 
 @app.route("/conversation", methods=["POST"]) 
 def conversation():
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     data = request.get_json()
     client = MongoClient('mongodb+srv://shehan:shehan123@cluster0.d5gvyao.mongodb.net/')
     db = client['portfolio']
