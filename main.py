@@ -1,5 +1,4 @@
 import json
-from chatbot.chat import chatWithBot
 from flask import Flask, request, jsonify
 import os
 from decouple import config
@@ -37,7 +36,8 @@ import io
 import pinecone
 from langchain.vectorstores import Pinecone
 from embeddingData.retrieve import getDataSet
-from embeddingData.store import storeDataSet
+from timeout_decorator import timeout
+# from embeddingData.store import storeDataSet
 from pymongo import MongoClient
 os.environ["OPENAI_API_KEY"] = config(
     "OPENAI_API_KEY"
@@ -50,14 +50,15 @@ class virtualAssistants(BaseModel):
         description="please provide answer for the question based on provided data set as a string"
     )
 
-@app.route("/storeembedding", methods=["POST"])
-def storeEmbedding():
-     return  storeDataSet()
+# @app.route("/storeembedding", methods=["POST"])
+# def storeEmbedding():
+#      return  storeDataSet()
 
 @app.route("/conversation", methods=["POST"])
+@timeout(50) 
 def conversation():
     data = request.get_json()
-    client = MongoClient('mongodb+srv://shehan:shehan2025@cluster0.d5gvyao.mongodb.net/')
+    client = MongoClient('mongodb+srv://shehan:shehan123@cluster0.d5gvyao.mongodb.net/')
     db = client['portfolio']
     collection = db['chat _history']
 
@@ -78,7 +79,7 @@ def conversation():
         embendingToken = embendingResault['token']
 
         connection_url = os.environ.get(
-            "MONGODB_URL", "mongodb+srv://shehan:shehan2025@cluster0.d5gvyao.mongodb.net/"
+            "MONGODB_URL", "mongodb+srv://shehan:shehan123@cluster0.d5gvyao.mongodb.net/"
         )
         message_history = MongoDBChatMessageHistory(
             connection_string=connection_url, session_id=sessionID
@@ -142,17 +143,17 @@ def conversation():
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
-@app.route("/aibot", methods=["POST"])
-def aibot():
-    data = request.get_json()
-    print("AAAAAAAAAAAAAAAAA")
-    if "sessionID" in data:
-        sessionID = data.get("sessionID")
-        answer=chatWithBot(data.get("question"))
-        return jsonify({"data": {"answer": answer}}), 201
+# @app.route("/aibot", methods=["POST"])
+# def aibot():
+#     data = request.get_json()
+#     print("AAAAAAAAAAAAAAAAA")
+#     if "sessionID" in data:
+#         sessionID = data.get("sessionID")
+#         answer=chatWithBot(data.get("question"))
+#         return jsonify({"data": {"answer": answer}}), 201
 
-    else:    
-        return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
+#     else:    
+#         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
 
 if __name__ == "__main__":
