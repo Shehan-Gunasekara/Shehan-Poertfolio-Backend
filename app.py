@@ -20,7 +20,7 @@ from langchain.output_parsers import (
     PydanticOutputParser,
     OutputFixingParser,
 )
-
+from chatbot.chat import chatWithBot
 from pydantic import BaseModel, Field
 from langchain.callbacks import get_openai_callback
 
@@ -142,17 +142,17 @@ def conversation():
     else:
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
-# @app.route("/aibot", methods=["POST"])
-# def aibot():
-#     data = request.get_json()
-#     print("AAAAAAAAAAAAAAAAA")
-#     if "sessionID" in data:
-#         sessionID = data.get("sessionID")
-#         answer=chatWithBot(data.get("question"))
-#         return jsonify({"data": {"answer": answer}}), 201
+@app.route("/aibot", methods=["POST"])
+def aibot():
+    data = request.get_json()
+    print("AAAAAAAAAAAAAAAAA")
+    if "sessionID" in data:
+        sessionID = data.get("sessionID")
+        answer=chatWithBot(data.get("question"))
+        return jsonify({"data": {"answer": answer}}), 201
 
-#     else:    
-#         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
+    else:    
+        return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
 
 if __name__ == "__main__":
