@@ -4,6 +4,7 @@ openai==0.28.0
 werkzeug==3.0.0
 duckduckgo-search==3.8.5
 pymongo
+gunicorn==21.2.0
 python-decouple==3.8
 pinecone-client==2.2.4
 requests
