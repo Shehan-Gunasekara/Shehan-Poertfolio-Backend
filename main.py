@@ -24,7 +24,7 @@ from langchain.output_parsers import (
 from pydantic import BaseModel, Field
 from langchain.callbacks import get_openai_callback
 
-import tiktoken
+
 import requests
 
 from langchain.schema import (
@@ -122,8 +122,8 @@ def conversation():
         print("conv", conv)
         try:
             response_obj = parser.parse(conv)
-            encoding = tiktoken.encoding_for_model("text-davinci-003")
-            output_tokens = len(encoding.encode(conv))
+            # encoding = tiktoken.encoding_for_model("text-davinci-003")
+            output_tokens = 20
             tokens = tokens + output_tokens
             answer = response_obj.answer
             conversation = {"sessionID": sessionID, "message": answer , "user": "agent"}
@@ -132,8 +132,8 @@ def conversation():
         except (json.JSONDecodeError, TypeError):
             new_parser = OutputFixingParser.from_llm(parser=parser, llm=llm)
             response_obj = new_parser.parse(conv)
-            encoding = tiktoken.encoding_for_model("text-davinci-003")
-            output_tokens = len(encoding.encode(conv))
+            # encoding = tiktoken.encoding_for_model("text-davinci-003")
+            output_tokens = 20
             tokens = tokens + output_tokens
             answer = response_obj.answer
             conversation = {"sessionID": sessionID, "message": answer , "user": "agent"}

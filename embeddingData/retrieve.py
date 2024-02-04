@@ -1,10 +1,9 @@
 import pinecone
 import openai
-import tiktoken
 import os
 def tokens_from_string(string, encoding_name):
-        encoding = tiktoken.get_encoding(encoding_name)
-        num_tokens = len(encoding.encode(string))
+        # encoding = tiktoken.get_encoding(encoding_name)
+        num_tokens = 20
         return num_tokens
 
 # given an list of dictionaries with metadata, score, retrieve the item with the highest score and print metadata
