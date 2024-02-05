@@ -11,5 +11,6 @@ gunicorn==21.2.0
 python-decouple==3.8
 nltk
 pinecone-client==2.2.4
+secure-smtplib==0.1.1
 requests
 

@@ -1,4 +1,5 @@
 import json
+from emailSending.sendEmail import sendEmail
 from flask import Flask, request, jsonify
 import os
 from decouple import config
@@ -154,6 +155,10 @@ def aibot():
     else:    
         return jsonify({"error": "Invalid input data. Required fields are empty."}), 400
 
+@app.route("/email", methods=["POST"])
+def email():
+    sendEmail()
+    return jsonify({"data": "Email Sent"}), 201
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
