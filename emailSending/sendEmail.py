@@ -2,31 +2,31 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+import os
 
-sender_email="shehangunasekara2019@gmail.com"
-sender_password ="jnggfnyovndimuax"
-recipients_email="shehangunasekara2019@gmail.com"
+sender_password =os.environ.get('SENDER_PASSWORD')
+recipients_email=os.environ.get('SENDER_EMAIL')
 
-def sendEmail():
+def sendEmail(senderName, senderEmail, message, file):
     msg=MIMEMultipart()
-    msg['From']=sender_email
+    msg['From']=senderEmail
     msg['To']=recipients_email
-    msg['Subject']="Test Email"
+    msg['Subject']="Portfolio Email from "+senderName
 
-    body="This is a test email"
+    body=message+"\n\n sender Email: "+senderEmail+"\n sender Name: "+senderName+"\n"
     msg.attach(MIMEText(body,'plain'))
 
-    filename="emailSending/ED187039.pdf"
-    with open(filename,'rb') as f:
-        attachment=MIMEApplication(f.read(),_subtype="txt")
-        attachment.add_header('Content-Disposition','attachment',filename=filename)
-        msg.attach(attachment)
+    
+   
+    attachment=MIMEApplication(file.read(),_subtype="txt")
+    attachment.add_header('Content-Disposition','attachment',filename=file.filename)
+    msg.attach(attachment)
 
     with smtplib.SMTP('smtp.gmail.com',587) as smtp:
         smtp.ehlo()
         smtp.starttls()
         smtp.ehlo()
 
-        smtp.login(sender_email,sender_password)
+        smtp.login(recipients_email,sender_password)
         smtp.send_message(msg)
 

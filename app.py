@@ -157,7 +157,16 @@ def aibot():
 
 @app.route("/email", methods=["POST"])
 def email():
-    sendEmail()
+    if(request.files['attachment'] == None):
+        attachment = None
+    else:
+        attachment=request.files['attachment']
+
+    senderName=request.form['name']
+    senderEmail=request.form['email']
+    message=request.form['message']
+    print("email", email)
+    sendEmail(senderName, senderEmail, message, attachment)
     return jsonify({"data": "Email Sent"}), 201
 
 if __name__ == "__main__":
