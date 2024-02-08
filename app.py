@@ -157,7 +157,7 @@ def aibot():
 
 @app.route("/email", methods=["POST"])
 def email():
-    if(request.files['attachment'] == None):
+    if 'attachment' not in request.files:
         attachment = None
     else:
         attachment=request.files['attachment']

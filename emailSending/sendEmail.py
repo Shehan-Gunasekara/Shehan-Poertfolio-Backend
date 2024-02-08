@@ -15,12 +15,10 @@ def sendEmail(senderName, senderEmail, message, file):
 
     body=message+"\n\n sender Email: "+senderEmail+"\n sender Name: "+senderName+"\n"
     msg.attach(MIMEText(body,'plain'))
-
-    
-   
-    attachment=MIMEApplication(file.read(),_subtype="txt")
-    attachment.add_header('Content-Disposition','attachment',filename=file.filename)
-    msg.attach(attachment)
+    if file!=None: 
+        attachment=MIMEApplication(file.read(),_subtype="txt")
+        attachment.add_header('Content-Disposition','attachment',filename=file.filename)
+        msg.attach(attachment)
 
     with smtplib.SMTP('smtp.gmail.com',587) as smtp:
         smtp.ehlo()
