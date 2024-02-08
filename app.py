@@ -3,7 +3,7 @@ from emailSending.sendEmail import sendEmail
 from flask import Flask, request, jsonify
 import os
 from decouple import config
-
+from flask_cors import CORS
 from langchain.memory import MongoDBChatMessageHistory
 from langchain.chains import ConversationChain
 
@@ -44,7 +44,7 @@ os.environ["OPENAI_API_KEY"] = config(
 )  # Fix the environment variable name
 
 app = Flask(__name__)
-
+CORS(app)
 class virtualAssistants(BaseModel):
     answer: str = Field(
         description="please provide answer for the question based on provided data set as a string"
