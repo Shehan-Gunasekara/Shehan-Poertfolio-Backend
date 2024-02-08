@@ -2,6 +2,7 @@
 torch==1.8.1+cpu 
 torchvision==0.9.1+cpu
 Flask==3.0.0
+Flask-Cors==4.0.0
 langchain==0.0.292
 openai==0.28.0
 werkzeug==3.0.0
